@@ -87,8 +87,8 @@ export function calculatePower(calculationData) {
         default: statPrimaire = stats.Frappe;
     }
 
-    const power = Math.floor(statPrimaire * 0.8 + stats.Precision * 0.2);
-    const powerBase = CalcCmndPowerExp(power, customPuissance);
+    const power = Math.ceil(statPrimaire * 0.8 + stats.Precision * 0.2);
+    const powerBase = Math.floor(CalcCmndPowerExp(power, customPuissance));
 
     let elementPlus = 0;
     if (elementJoueur === elementTechnique) {

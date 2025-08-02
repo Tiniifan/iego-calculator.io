@@ -210,7 +210,7 @@ function applyAndProcessState(state) {
     // This function updates skill slots, stats, etc.
     view.applyStateToUI(state, { players: model.getPlayers(), techniques: model.getTechniques() });
 
-    Ensure that the technique to be restored exists before using it.
+    // Ensure that the technique to be restored exists before using it.
     const techIdToRestore = state.calculationState?.selectedCalculationTech;
     console.log("Tentative de restauration de la technique:", techIdToRestore);
     

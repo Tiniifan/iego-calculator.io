@@ -170,7 +170,7 @@ export function updateCalculationUI(technique) {
 
 export function displayResults(results) {
     DOMElements.resultPower.textContent = results.power;
-    DOMElements.resultPowerBase.textContent = results.powerBase.toFixed(2);
+    DOMElements.resultPowerBase.textContent = results.powerBase;
     DOMElements.resultElementPlus.textContent = results.elementPlus;
     DOMElements.resultCritChance.textContent = `${results.critChance.toFixed(2)}%`;
     DOMElements.resultCritMultiplier.textContent = `x${results.critMultiplier}`;
