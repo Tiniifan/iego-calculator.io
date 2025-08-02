@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Valeur Inazuma Eleven Go 0.2</title>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-asm.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <header>
+            <h1>Calculateur de Valeur Inazuma Eleven Go v0.1</h1>
+            <p class="subtitle">
+                Ce calculateur se base sur les données de IEGO Deluxe 0.2.3<br>
+                Il est en cours d'écriture et par conséquent, il peut contenir des erreurs.
+            </p>
+        </header>
+
+        <div class="main-content">
+
+            <div class="saved-players-panel">
+                <h3>Builds Sauvegardés</h3>
+                <div class="saved-players-controls">
+                    <button id="addPlayerBuildBtn" title="Ajouter le joueur actuel à la liste">➕ Ajouter</button>
+                    <button id="deletePlayerBuildBtn" title="Supprimer le build sélectionné" disabled>➖ Supprimer</button>
+                </div>
+                <ul id="savedPlayersList" class="saved-players-list">
+                </ul>
+            </div>
+
+            <div class="player-section">
+                <h2>Joueur</h2>
+                
+                <div class="player-selector">
+                    <label for="player1Select">Sélectionner un joueur:</label>
+                    <select id="player1Select" placeholder="Taper pour rechercher..."></select>
+                </div>
+
+                <div class="player-info" id="player1Info" style="display: none;">
+                    <div class="basic-info">
+                        <div class="info-row">
+                            <span class="label">Nom:</span>
+                            <span id="player1Name" class="value"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Position:</span>
+                            <span id="player1Position" class="value"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Élément:</span>
+                            <span id="player1Element" class="value element-badge"></span>
+                        </div>
+                    </div>
+
+                    <details class="accordion-section" open>
+                        <summary>Statistiques</summary>
+                        <div class="accordion-content">
+                            <div class="stats-grid">
+                                <div class="stat-item"><label>GP:</label><input type="number" id="player1GP" min="0" max="999"></div>
+                                <div class="stat-item"><label>PT:</label><input type="number" id="player1PT" min="0" max="999"></div>
+                                <div class="stat-item"><label>Frappe:</label><input type="number" id="player1Frappe" min="0" max="999"></div>
+                                <div class="stat-item"><label>Maîtrise:</label><input type="number" id="player1Maitrise" min="0" max="999"></div>
+                                <div class="stat-item"><label>Précision:</label><input type="number" id="player1Precision" min="0" max="999"></div>
+                                <div class="stat-item"><label>Défense:</label><input type="number" id="player1Defense" min="0" max="999"></div>
+                                <div class="stat-item"><label>Vitesse:</label><input type="number" id="player1Vitesse" min="0" max="999"></div>
+                                <div class="stat-item"><label>Endurance:</label><input type="number" id="player1Endurance" min="0" max="999"></div>
+                                <div class="stat-item"><label>Interception:</label><input type="number" id="player1Interception" min="0" max="999"></div>
+                                <div class="stat-item"><label>Chance:</label><input type="number" id="player1Chance" min="0" max="999"></div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="accordion-section" open>
+                        <summary>Techniques</summary>
+                        <div class="accordion-content">
+                            <div class="technique-slots">
+                                <div class="technique-slot">
+                                    <select class="technique-select" id="player1Tech1" placeholder="Chercher une technique..."></select>
+                                    <select class="technique-element-select" id="player1Tech1Element"></select>
+                                    <input type="number" class="technique-power" id="player1Tech1Power" placeholder="Pwr" min="0">
+                                </div>
+                                <div class="technique-slot">
+                                    <select class="technique-select" id="player1Tech2" placeholder="Chercher une technique..."></select>
+                                    <select class="technique-element-select" id="player1Tech2Element"></select>
+                                    <input type="number" class="technique-power" id="player1Tech2Power" placeholder="Pwr" min="0">
+                                </div>
+                                <div class="technique-slot">
+                                    <select class="technique-select" id="player1Tech3" placeholder="Chercher une technique..."></select>
+                                    <select class="technique-element-select" id="player1Tech3Element"></select>
+                                    <input type="number" class="technique-power" id="player1Tech3Power" placeholder="Pwr" min="0">
+                                </div>
+                                <div class="technique-slot">
+                                    <select class="technique-select" id="player1Tech4" placeholder="Chercher une technique..."></select>
+                                    <select class="technique-element-select" id="player1Tech4Element"></select>
+                                    <input type="number" class="technique-power" id="player1Tech4Power" placeholder="Pwr" min="0">
+                                </div>
+                                <div class="technique-slot">
+                                    <select class="technique-select" id="player1Tech5" placeholder="Chercher une technique..."></select>
+                                    <select class="technique-element-select" id="player1Tech5Element"></select>
+                                    <input type="number" class="technique-power" id="player1Tech5Power" placeholder="Pwr" min="0">
+                                </div>
+                                <div class="technique-slot">
+                                    <select class="technique-select" id="player1Tech6" placeholder="Chercher une technique..."></select>
+                                    <select class="technique-element-select" id="player1Tech6Element"></select>
+                                    <input type="number" class="technique-power" id="player1Tech6Power" placeholder="Pwr" min="0">
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="accordion-section">
+                        <summary>Effets</summary>
+                        <div class="accordion-content">
+                             <div class="talents-grid">
+                                <label><input type="checkbox" id="player1Appel"> Appel</label>
+                            </div>
+                            <div class="element-selectors">
+                                <div class="element-selector">
+                                    <label>Élément Appel:</label>
+                                    <select id="player1ElementAppel" disabled>
+                                        <option value="feu">Feu</option>
+                                        <option value="bois">Bois</option>
+                                        <option value="air">Air</option>
+                                        <option value="terre">Terre</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div class="calculation-section">
+                <div class="technique-battle">
+                    <h3>Calcul de Puissance</h3>
+                    <div class="technique-selection">
+                        <div class="selected-technique">
+                            <label>Technique à calculer:</label>
+                            <select id="calculationTechnique" placeholder="Choisir une technique..."></select>
+                        </div>
+                        <div class="partners-section">
+                            <label>Nombre de partenaires:</label>
+                            <select id="nombrePartenaires">
+                                <option value="1">1 (Solo)</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <label>Partenaires même élément:</label>
+                            <input type="number" id="partenairesMemeElement" value="0" min="0" max="2">
+                        </div>
+                    </div>
+                    <button id="calculateBtn" class="calculate-btn">Calculer la Puissance</button>
+                    <div class="results" id="results" style="display: none;">
+                        <h4>Résultats</h4>
+                        <div class="result-values">
+                            <div class="result-item"><span class="result-label">Power:</span><span id="resultPower" class="result-value">0</span></div>
+                            <div class="result-item"><span class="result-label">Power Base:</span><span id="resultPowerBase" class="result-value">0</span></div>
+                            <div class="result-item"><span class="result-label">Element Plus:</span><span id="resultElementPlus" class="result-value">0</span></div>
+                            <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
+                            <div class="result-item"><span class="result-label">Chance de Critique:</span><span id="resultCritChance" class="result-value">0%</span></div>
+                            <div class="result-item"><span class="result-label">Valeur Critique:</span><span id="resultCritMultiplier" class="result-value">x1</span></div>
+                            <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
+                            <div class="result-item"><span id="resultFinalMinLabel" class="result-label">Puissance Finale Min (%):</span><span id="resultFinalMin" class="result-value final">0</span></div>
+                            <div class="result-item"><span id="resultFinalConstantLabel" class="result-label">Puissance Finale Constant (%):</span><span id="resultFinalConstant" class="result-value final">0</span></div>
+                            <div class="result-item"><span id="resultFinalMaxLabel" class="result-label">Puissance Finale Max (%):</span><span id="resultFinalMax" class="result-value final">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/controller.js"></script>
+</body>
+</html>
