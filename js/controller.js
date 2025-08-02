@@ -262,10 +262,60 @@ function setupEventListeners() {
     });
 }
 
+function addWheelSupportToNumericInputs() {
+    // On cherche tous les inputs de type "number" sur la page
+    const numericInputs = document.querySelectorAll('input[type="number"]');
+
+    numericInputs.forEach(input => {
+        input.addEventListener('wheel', function(event) {
+            // Empêche le défilement de la page
+            event.preventDefault();
+            
+            // On vérifie que le champ est bien actif ou survolé
+            if (document.activeElement === this || this.matches(':hover')) {
+                const currentValue = parseFloat(this.value) || 0;
+                const step = parseFloat(this.step) || 1;
+                const min = this.min !== '' ? parseFloat(this.min) : -Infinity;
+                const max = this.max !== '' ? parseFloat(this.max) : Infinity;
+                
+                let multiplier = 1;
+                if (event.shiftKey) {
+                    multiplier = 10; // Shift = incréments plus rapides
+                } else if (event.ctrlKey || event.metaKey) {
+                    multiplier = 0.1; // Ctrl/Cmd = incréments plus fins
+                }
+                
+                const deltaY = event.deltaY || event.detail || event.wheelDelta;
+                // Si deltaY > 0, on descend (valeur négative), sinon on monte
+                const increment = (deltaY > 0 ? -step : step) * multiplier;
+                let newValue = currentValue + increment;
+                
+                // On s'assure de rester dans les bornes min/max
+                newValue = Math.max(min, Math.min(max, newValue));
+                
+                // On gère correctement les décimales si le "step" est une fraction
+                if (step < 1) {
+                    const decimals = (step.toString().split('.')[1] || '').length;
+                    newValue = parseFloat(newValue.toFixed(decimals));
+                } else {
+                    newValue = Math.round(newValue);
+                }
+                
+                this.value = newValue;
+                // TRÈS IMPORTANT : on déclenche l'événement "input" pour que
+                // votre fonction handleAutoSaveEvent soit bien appelée !
+                this.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }, { passive: false });
+    });
+}
+
 async function init() {
     try {
         // This function is called first to ensure that all elements are found.
         view.cacheDOMElements();
+		
+		addWheelSupportToNumericInputs();
         
         await model.loadDatabases();
         view.initTomSelects({

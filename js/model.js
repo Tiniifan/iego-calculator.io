@@ -20,9 +20,9 @@ function CalcCmndPowerExp(prmBase, cmndPow) {
 function calculateOutcomeProbabilities(rate, skillDif) {
     let minCount = 0, maxCount = 0;
     const totalOutcomes = 52;
-    const roundedRate = Math.ceil(rate);
-    const maxThreshold = Math.ceil(skillDif * 1.5);
-    const minThreshold = Math.ceil(skillDif * 0.5);
+    const roundedRate = rate;
+    const maxThreshold = skillDif * 1.5;
+    const minThreshold = skillDif * 0.5;
     for (let randVal = 0; randVal <= 51; randVal++) {
         const sum = randVal + roundedRate;
         if (sum > maxThreshold) maxCount++;
@@ -126,7 +126,7 @@ export function calculatePower(calculationData) {
 		puissanceBaseFinale = Math.floor(puissanceBaseFinale * 1.2);
 	}	
 
-    const _tec = stats.Precision * 0.2;
+    const _tec = stats.Precision;
     let basePrecision = -0.00050000002 * (_tec * _tec) + 0.1122 * _tec + 0.88779998;
     if (elementTechnique !== 'néant') {
         if (elementJoueur === elementTechnique) basePrecision += 5;

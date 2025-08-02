@@ -192,3 +192,11 @@ select option { background: #1c1c1c; color: var(--text-primary); }
 .ts-wrapper .item { background: var(--bg-surface-1); color: var(--text-primary); padding: 4px 8px; border: 1px solid var(--border-color); border-radius: var(--radius-s); }
 .ts-wrapper.single .ts-control:after { border-color: var(--text-secondary) transparent transparent; }
 .ts-control, .ts-wrapper.single.input-active .ts-control { background: transparent; cursor: text; }
+
+input[type="number"] {
+    cursor: pointer;
+}
+
+input[type="number"]:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
